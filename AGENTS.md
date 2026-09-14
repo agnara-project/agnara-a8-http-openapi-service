@@ -11,7 +11,7 @@ This document is the operational source of truth for autonomous coding agents (s
 - **Purpose:** Validate and demonstrate the HTTP/OpenAPI layer of Agnara `0.1.0a8` using `agnara-http`. 
 - **Target Agnara Version:** `0.1.0a8` (STRICT)
 - **Python Version:** `>=3.14`
-- **Status:** Release Validation / Functional
+- **Status:** FINAL / FROZEN
 - **Mission:** Prove that a real application can be built entirely on Agnara capabilities and exposed through HTTP bindings, OpenAPI generation, and discovery, without turning HTTP routes into the domain center, and strictly using public 0.1.0a8 APIs.
 
 ## 2. Inviolable Architectural Constraints
