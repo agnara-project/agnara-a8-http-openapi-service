@@ -12,9 +12,45 @@ async def test_openapi():
         r = await client.get("/openapi.json")
         assert r.status_code == 200
         data = r.json()
-        assert "openapi" in data
+        assert isinstance(data, dict)
+
+        # Version and Info
+        assert data["openapi"] == "3.2.0"
         assert data["info"]["title"] == "Orders API"
-        assert "/orders" in data["paths"]
+        assert data["info"]["version"] == "1.0.0"
+
+        # Paths
+        paths = data["paths"]
+        assert len(paths) == 2, "Accidental unrelated routes present"
+        assert "/orders" in paths
+        assert "/orders/{order_id}" in paths
+
+        # Methods
+        assert "post" in paths["/orders"]
+        assert "get" in paths["/orders/{order_id}"]
+        assert "delete" in paths["/orders/{order_id}"]
+
+        # Required Path Parameters
+        get_op = paths["/orders/{order_id}"]["get"]
+        path_params = [p for p in get_op["parameters"] if p["in"] == "path"]
+        assert len(path_params) == 1
+        assert path_params[0]["name"] == "order_id"
+        assert path_params[0]["required"] is True
+
+        # Request body schema
+        post_op = paths["/orders"]["post"]
+        req_body = post_op["requestBody"]["content"]["application/json"]["schema"]
+        assert req_body["type"] == "object"
+        assert "amount" in req_body["properties"]
+        assert "currency" in req_body["properties"]
+
+        # Documented response codes
+        assert "200" in post_op["responses"]
+        assert "204" in post_op["responses"]
+        assert "default" in post_op["responses"]
+
+        # Operation IDs
+        assert post_op["operationId"] == "orders.create_order:post:/orders"
 
 
 @pytest.mark.asyncio

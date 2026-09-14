@@ -8,6 +8,19 @@
 
 *Note: This repository validates Agnara 0.1.0a8, but the repository version itself is 1.0.x.*
 
+## Scope
+
+This policy applies specifically to the `agnara-a8-http-openapi-service` repository and its interaction with Agnara `0.1.0a8`.
+
+## Swagger / Docker Threat Surface
+
+This repository includes a deployment-side Swagger UI (`docker-compose.yml`). The following threat model applies:
+- **Localhost Only**: The Swagger container binds exclusively to `127.0.0.1:8080`. Production deployments must make an explicit decision about exposing API documentation.
+- **Same-Origin Constraint**: No Docker DNS names are exposed to the browser. Swagger acts as a proxy to avoid CORS weaknesses.
+- **Try It Out**: Interactive requests are disabled by default (`SUPPORTED_SUBMIT_METHODS=[]`).
+- **No Secrets**: Documentation and Swagger configuration must never contain embedded credentials or secrets.
+- **Hardened Image**: Swagger UI is pinned to an exact version (`v5.17.14`) and runs with container hardening (`no-new-privileges`).
+
 ## Reporting a Vulnerability
 
 If you discover a security vulnerability within this project, please report it via a **Private Security Advisory** on GitHub, or email `security@agnara.dev`.

@@ -5,13 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2026-09-13
-
+## [1.0.1] - 2026-09-13
 ### Added
-- Initial baseline validating Agnara `0.1.0a8`.
-- Order API domain using native `dataclasses`.
-- Capabilities layer defining `create_order`, `get_order`, and `cancel_order`.
-- Explicit `ScopePolicy` definitions protecting read and write operations.
+- Complete Docker validation stack with multi-stage build.
+- Deployment-side Swagger UI sidecar proxying natively generated OpenAPI schema.
+- Extended OpenAPI contract testing.
+- `docs/DOCKER.md` documentation covering topology and Swagger reverse proxying.
+
+## [1.0.0] - 2026-09-13
+### Added
+- Complete implementation of the HTTP reference service using `agnara==0.1.0a8`.
+- Core capabilities for order management (`create`, `get`, `cancel`).
+- ASGI compilation mapping with `agnara-http`.
+- Test suite validating expected 400, 403, and 404 mappings based on Domain models.
+- Native `/openapi.json` generation.
+- Full organizational standardization across governance documents.
 - `agnara-http` integration to compile endpoints directly to ASGI 3.
 - Native path, query, and body bindings.
 - OpenAPI JSON schema generation.

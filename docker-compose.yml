@@ -5,13 +5,38 @@ services:
       dockerfile: Dockerfile
     image: agnara-a8-http-openapi-service:latest
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     init: true
     restart: unless-stopped
     environment:
       - PYTHONUNBUFFERED=1
+      - HOST=0.0.0.0
+      - PORT=8000
     security_opt:
       - no-new-privileges:true
-    # Cap_drop all to reduce attack surface
     cap_drop:
       - ALL
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/openapi.json')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui:v5.17.14
+    ports:
+      - "127.0.0.1:8080:8080"
+    init: true
+    restart: unless-stopped
+    environment:
+      # Load the proxied openapi.json by default
+      - URL=/openapi.json
+      # Disable Try It Out by default as requested
+      - SUPPORTED_SUBMIT_METHODS=[]
+    volumes:
+      # Mount custom nginx config to proxy /openapi.json to agnara-api:8000
+      - ./swagger-nginx.conf:/etc/nginx/templates/default.conf.template:ro
+    depends_on:
+      agnara-api:
+        condition: service_healthy

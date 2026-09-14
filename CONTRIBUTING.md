@@ -29,11 +29,28 @@ This repository specifically validates `0.1.0a8`.
 
 ## Quality Gates
 
-Before opening a PR, ensure you have run and passed:
+Before opening a PR, ensure all local validations pass:
+
 ```bash
-ruff format .
+# Format and Lint
+ruff format --check .
 ruff check .
+
+# Tests
 pytest -v
+
+# Build Validation
+python -m build
+python -m pip check
+
+# Docker Smoke Tests
+docker compose config
+docker compose down --remove-orphans
+docker compose build --no-cache
+docker compose up -d
+curl --fail http://localhost:8000/openapi.json
+curl --fail http://localhost:8080/
+docker compose down
 ```
 
 ## Pull Request Process

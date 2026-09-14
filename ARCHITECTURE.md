@@ -47,14 +47,24 @@ sequenceDiagram
     end
 ```
 
-## Security Boundaries
+## Deployment & Visualization Boundaries
 
-- Security policies (like `ScopePolicy`) are inherently tied to the capabilities. 
-- The HTTP layer trusts the Capability layer to enforce rules.
-- Authentication/Principal injection is handled by the underlying execution context during capability invocation.
+```mermaid
+sequenceDiagram
+    participant Browser
+    participant Swagger (Docker Port 8080)
+    participant ASGI API (Docker Port 8000)
+
+    Browser->>Swagger: GET /
+    Swagger-->>Browser: Swagger HTML
+    Browser->>Swagger: GET /openapi.json (same-origin)
+    Swagger->>ASGI API: Proxy Pass http://agnara-api:8000/openapi.json
+    ASGI API-->>Swagger: Native OpenAPI JSON
+    Swagger-->>Browser: Native OpenAPI JSON
+```
 
 ## Intentionally Excluded
 
 - **Databases:** We use an in-memory dictionary for state to isolate the validation to the Agnara HTTP adapter.
 - **Frameworks:** No FastAPI or Flask. The application is purely ASGI compiled via Agnara.
-- **Swagger UI:** The `0.1.0a8` release provides raw OpenAPI generation (`/openapi.json`), but UI serving is excluded as it is not part of the public supported API surface in this version.
+- **Internal Providers:** **Swagger UI may consume Agnara-generated OpenAPI, but it must not become part of the Agnara application composition API for this frozen a8 validation repository.** Agnara `0.1.0a8` does not expose UI capabilities publicly via `agnara-http`. Thus, we provide Swagger UI exclusively as a separate container/visualization layer. This design choice strictly honors the `0.1.0a8` public API boundary.

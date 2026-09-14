@@ -1,6 +1,6 @@
 [project]
 name = "agnara-a8-http-openapi-service"
-version = "1.0.0"
+version = "1.0.1"
 description = "A validation project for Agnara 0.1.0a8 HTTP capabilities."
 requires-python = ">=3.14"
 

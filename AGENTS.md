@@ -61,6 +61,20 @@ py -3.14 -m venv .venv
 .venv\Scripts\python main.py
 ```
 
+**Docker Smoke Tests:**
+```bash
+docker compose config
+docker compose down --remove-orphans
+docker compose build --no-cache
+docker compose up -d
+docker compose ps
+# Verify Endpoints:
+curl --fail http://localhost:8000/openapi.json
+curl --fail http://localhost:8080/
+curl --fail http://localhost:8080/openapi.json
+docker compose down --remove-orphans
+```
+
 ## 5. Public API / Integration Boundary
 
 **Allowed:**
@@ -77,10 +91,13 @@ py -3.14 -m venv .venv
 
 ## 6. Negative Constraints
 
-- DO NOT suppress failing tests merely to make CI green. If an Agnara `0.1.0a8` limitation causes a failure, document it in README and adapt the test to reflect reality.
-- DO NOT invent missing Swagger UI routes in documentation if `agnara-http` does not expose them automatically (only `/openapi.json` is verified).
-- DO NOT add SEO filler or speculative content.
-- DO NOT alter architectural boundaries (e.g. moving business logic into the HTTP routing layer).
+- **DO NOT** suppress failing tests merely to make CI green.
+- **DO NOT** add SEO filler or speculative content.
+- **DO NOT** alter architectural boundaries (e.g. moving business logic into the HTTP routing layer).
+- **DO NOT** invent missing Swagger UI routes natively. **Swagger UI is strictly deployment-side**.
+- **DO NOT** expose the Docker API strictly to 127.0.0.1 inside the container; it must listen on `0.0.0.0` to route correctly.
+- **DO NOT** leak Docker DNS names to the browser. Swagger consumes `/openapi.json` via a same-origin proxy.
+- **DO NOT** enable Swagger "Try It Out" by default.
 
 ## 7. Git and Contribution Protocol
 
