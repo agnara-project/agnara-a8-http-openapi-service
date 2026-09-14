@@ -75,7 +75,11 @@ curl http://localhost:8000/orders/1
 This repository specifically validates how to construct an ASGI service over `agnara==0.1.0a8`. 
 
 **Note on Swagger UI:**
-The public Agnara a8 composition API and native OpenAPI schema generator (`agnara-http`) do not natively serve Swagger endpoints (`/docs`, `/swagger`). Instead of simulating unexposed upstream documentation providers by monkey-patching Agnara, this repository exposes Swagger UI as a *Docker deployment-side container*.
+* OpenAPI lo genera Agnara.
+* Swagger UI solamente lo visualiza.
+* Swagger no forma parte de la API pública de `agnara-http==0.1.0a8`.
+* Por eso este repositorio usa un contenedor Swagger separado.
+* Esto cambiará solamente en futuros releases de Agnara si Swagger pasa a formar parte de la API pública.
 
 ## Limitations
 

@@ -12,7 +12,7 @@ The Docker Compose setup creates a self-contained runtime consisting of two serv
    - Exposes the raw schema natively via `http://localhost:8000/openapi.json`.
 
 2. **`swagger-ui` (Port 8080)**
-   - A sidecar container built from the official `swaggerapi/swagger-ui:v5.17.14`.
+   - A sidecar container built from the official `swaggerapi/swagger-ui:v5.32.15`.
    - Exposes `http://127.0.0.1:8080` to the host.
    - Acts as a reverse-proxy and frontend. It uses a custom Nginx template (`swagger-nginx.conf`) to serve the UI and route `/openapi.json` to the API container (`http://agnara-api:8000/openapi.json`).
 

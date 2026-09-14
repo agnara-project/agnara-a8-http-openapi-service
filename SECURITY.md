@@ -15,11 +15,13 @@ This policy applies specifically to the `agnara-a8-http-openapi-service` reposit
 ## Swagger / Docker Threat Surface
 
 This repository includes a deployment-side Swagger UI (`docker-compose.yml`). The following threat model applies:
-- **Localhost Only**: The Swagger container binds exclusively to `127.0.0.1:8080`. Production deployments must make an explicit decision about exposing API documentation.
-- **Same-Origin Constraint**: No Docker DNS names are exposed to the browser. Swagger acts as a proxy to avoid CORS weaknesses.
+- **Localhost Only**: Swagger and OpenAPI are published exclusively on `127.0.0.1`. Production deployments must make an explicit decision about exposing API documentation.
+- **Same-Origin Constraint**: No Docker DNS names are exposed to the browser. Swagger acts as a proxy to avoid CORS weaknesses. OpenAPI is published locally.
 - **Try It Out**: Interactive requests are disabled by default (`SUPPORTED_SUBMIT_METHODS=[]`).
+- **Remote Validator**: Disabled by default (`VALIDATOR_URL=none`) to avoid external dependencies.
 - **No Secrets**: Documentation and Swagger configuration must never contain embedded credentials or secrets.
-- **Hardened Image**: Swagger UI is pinned to an exact version (`v5.17.14`) and runs with container hardening (`no-new-privileges`).
+- **Hardened Image**: Swagger UI is pinned to an exact version (`v5.32.15`) and runs with container hardening (`no-new-privileges:true`).
+- **Intended Usage**: This setup is intended purely as a local/validation tool, not for direct public exposure.
 
 ## Reporting a Vulnerability
 

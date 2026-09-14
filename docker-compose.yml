@@ -24,7 +24,7 @@ services:
       start_period: 5s
 
   swagger-ui:
-    image: swaggerapi/swagger-ui:v5.17.14
+    image: swaggerapi/swagger-ui:v5.32.15
     ports:
       - "127.0.0.1:8080:8080"
     init: true
@@ -34,9 +34,13 @@ services:
       - URL=/openapi.json
       # Disable Try It Out by default as requested
       - SUPPORTED_SUBMIT_METHODS=[]
+      # Disable remote validator to avoid external dependencies
+      - VALIDATOR_URL=none
     volumes:
       # Mount custom nginx config to proxy /openapi.json to agnara-api:8000
       - ./swagger-nginx.conf:/etc/nginx/templates/default.conf.template:ro
     depends_on:
       agnara-api:
         condition: service_healthy
+    security_opt:
+      - no-new-privileges:true

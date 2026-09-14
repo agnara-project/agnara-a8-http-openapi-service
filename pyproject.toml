@@ -7,8 +7,7 @@ requires-python = ">=3.14"
 dependencies = [
     "agnara==0.1.0a8",
     "agnara-http==0.1.0a8",
-    "uvicorn",
-    "pydantic"
+    "uvicorn"
 ]
 
 [project.optional-dependencies]
@@ -17,7 +16,9 @@ dev = [
     "pytest-asyncio",
     "httpx",
     "ruff",
-    "build"
+    "build",
+    "playwright",
+    "pytest-playwright"
 ]
 
 [tool.ruff]
