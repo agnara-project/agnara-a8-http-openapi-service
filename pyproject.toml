@@ -27,3 +27,6 @@ target-version = "py314"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
+markers = [
+    "docker: tests requiring the Docker Compose integration environment"
+]

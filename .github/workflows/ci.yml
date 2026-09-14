@@ -30,7 +30,7 @@ jobs:
       run: ruff check .
         
     - name: Test
-      run: pytest -v
+      run: pytest -v -m "not docker"
         
     - name: Validate Build
       run: |
@@ -41,10 +41,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: validate
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       
       - name: Set up Python 3.14
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.14'
           
@@ -68,6 +68,7 @@ jobs:
             sleep 2
           done
           echo "API failed to become healthy."
+          docker compose ps
           docker compose logs
           exit 1
           
@@ -76,16 +77,19 @@ jobs:
           curl --fail http://localhost:8000/openapi.json
           curl --fail http://localhost:8080/
           curl --fail http://localhost:8080/openapi.json
+          curl --fail http://localhost:8080/openapi.json | python -c "import json,sys; d=json.load(sys.stdin); assert d['openapi']=='3.2.0'"
           
       - name: Install Playwright Browsers
-        run: playwright install chromium
+        run: python -m playwright install --with-deps chromium
         
       - name: Run Swagger UI Integration Test
-        run: pytest -v tests/test_swagger_ui.py
+        run: pytest -v -m docker
         
       - name: Capture logs on failure
         if: failure()
-        run: docker compose logs
+        run: |
+          docker compose ps
+          docker compose logs
         
       - name: Tear down stack
         if: always()
