@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.git/
+.github/
+docs/
+.agents/
+AGENTS.md
+ARCHITECTURE.md
+CONTRIBUTING.md
+SECURITY.md
+CHANGELOG.md
+tests/
+pytest.ini
