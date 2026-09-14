@@ -27,7 +27,7 @@ def test_swagger_ui_loads(page: Page):
     # Ensure there are no "Unable to render this definition" errors
     errors = page.locator(".errors-wrapper")
     expect(errors).not_to_be_visible()
-    
+
     # Check explicitly for "Unable to render this definition" string
     expect(page.locator("body")).not_to_contain_text("Unable to render this definition")
     expect(page.locator("body")).not_to_contain_text("Supported versions are")
