@@ -1,0 +1,11 @@
+agnara==0.1.0a8
+agnara-http==0.1.0a8
+uvicorn
+pydantic
+
+[dev]
+pytest
+pytest-asyncio
+httpx
+ruff
+build

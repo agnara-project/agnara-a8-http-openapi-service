@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: agnara-a8-http-openapi-service
+Version: 1.0.0
+Summary: A validation project for Agnara 0.1.0a8 HTTP capabilities.
+Requires-Python: >=3.14
+License-File: LICENSE
+Requires-Dist: agnara==0.1.0a8
+Requires-Dist: agnara-http==0.1.0a8
+Requires-Dist: uvicorn
+Requires-Dist: pydantic
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-asyncio; extra == "dev"
+Requires-Dist: httpx; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: build; extra == "dev"
+Dynamic: license-file
