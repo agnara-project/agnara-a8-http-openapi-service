@@ -19,10 +19,15 @@ def test_swagger_ui_loads(page: Page):
     title = page.locator(".info")
     expect(title).to_contain_text("Orders API")
 
-    # Verify an expected operation is visible
-    op = page.locator(".opblock").first
-    expect(op).to_be_visible()
+    # Verify expected operations are visible
+    expect(page.locator(".opblock-post", has_text="/orders").first).to_be_visible()
+    expect(page.locator(".opblock-get", has_text="/orders/{order_id}").first).to_be_visible()
+    expect(page.locator(".opblock-delete", has_text="/orders/{order_id}").first).to_be_visible()
 
     # Ensure there are no "Unable to render this definition" errors
     errors = page.locator(".errors-wrapper")
     expect(errors).not_to_be_visible()
+    
+    # Check explicitly for "Unable to render this definition" string
+    expect(page.locator("body")).not_to_contain_text("Unable to render this definition")
+    expect(page.locator("body")).not_to_contain_text("Supported versions are")
