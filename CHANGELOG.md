@@ -17,11 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Complete implementation of the HTTP reference service using `agnara==0.1.0a8`.
 - Core capabilities for order management (`create`, `get`, `cancel`).
 - ASGI compilation mapping with `agnara-http`.
-- Test suite validating expected 400, 403, and 404 mappings based on Domain models.
+- Test suite validating expected 400 and 403 mappings based on Domain models. (Note: 404 NOT_FOUND is returned by the capability, but unauthenticated HTTP requests correctly halt at 403 Forbidden due to policy constraints. Supplying a Principal natively over HTTP is not part of the `0.1.0a8` public API validation scope).
 - Native `/openapi.json` generation.
 - Full organizational standardization across governance documents.
 - `agnara-http` integration to compile endpoints directly to ASGI 3.
 - Native path, query, and body bindings.
 - OpenAPI JSON schema generation.
 - Full agent-ready documentation including `AGENTS.md` and `ARCHITECTURE.md`.
-- Automated testing suite verifying 400 (Validation), 403 (Policy), 404 (Canonical Failure), and 200 (Success) responses.
+- Automated testing suite verifying 400 (Validation), 403 (Policy), and 200 (Success) responses.
