@@ -1,0 +1,17 @@
+services:
+  agnara-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: agnara-a8-http-openapi-service:latest
+    ports:
+      - "8000:8000"
+    init: true
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+    security_opt:
+      - no-new-privileges:true
+    # Cap_drop all to reduce attack surface
+    cap_drop:
+      - ALL
